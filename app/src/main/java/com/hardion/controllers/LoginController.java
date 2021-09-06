@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import com.hardion.services.AuthService;
+import com.hardion.services.UserService;
 
 @Controller
 public class LoginController {
@@ -20,7 +20,7 @@ public class LoginController {
 			"Spread your ideology", "Find your ideology" };
 
 	@Autowired
-	AuthService authService;
+	UserService authService;
 
 	String getRandomSentence() {
 		int rnd = new Random().nextInt(sentences.length);
@@ -29,7 +29,7 @@ public class LoginController {
 	}
 
 	@GetMapping("/login")
-	public String loginForm(Model model) {
+	public String loginPage(Model model) {
 		model.addAttribute("randomSentence", getRandomSentence());
 		model.addAttribute("loginForm", new LoginForm());
 
@@ -41,10 +41,10 @@ public class LoginController {
 		boolean isAuthGood = authService.authorizeUser(loginForm.getLogin(), loginForm.getPassword());
 
 		if (isAuthGood) {
-			return "home";
+			return goToHome();
 		} else {
 			model.addAttribute("errorBadAuth", true);
-			return this.loginForm(model);
+			return this.loginPage(model);
 		}
 
 	}
@@ -54,12 +54,16 @@ public class LoginController {
 		try {
 			authService.createUser(loginForm.getLogin(), loginForm.getPassword());
 
-			return "home";
+			return goToHome();
 		} catch (Exception e) {
 			System.out.println(e);
 			model.addAttribute("errorUserExist", true);
-			return this.loginForm(model);
+			return this.loginPage(model);
 		}
+	}
+
+	private String goToHome(){
+		return "redirect:home";
 	}
 
 }
