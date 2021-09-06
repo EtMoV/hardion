@@ -1,5 +1,6 @@
 package com.hardion.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,35 +8,35 @@ import javax.persistence.Id;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class User {
+  
   @Id
-  @GeneratedValue(strategy=GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
 
-  private String name;
+  @Column(unique=true)
+  private String login;
 
-  private String email;
+  private String password;
 
+  // ACCESSORS
   public Integer getId() {
     return id;
   }
 
-  public void setId(Integer id) {
-    this.id = id;
+  public String getLogin() {
+    return login;
   }
 
-  public String getName() {
-    return name;
+  public void setLogin(String login) {
+    this.login = login;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public String getPassword() {
+    return password;
   }
 
-  public String getEmail() {
-    return email;
+  public void setPassword(String password) {
+    this.password = password;
   }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
 }

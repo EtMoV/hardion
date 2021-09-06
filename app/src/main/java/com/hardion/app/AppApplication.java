@@ -7,9 +7,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan("com.hardion.controllers")
-@EntityScan("com.hardion.entities")
 @EnableJpaRepositories("com.hardion.repositories")
+@EntityScan("com.hardion.entities")
+@ComponentScan("com.hardion.services")
+@ComponentScan("com.hardion.controllers")
 public class AppApplication {
 
 	public static void main(String[] args) {
