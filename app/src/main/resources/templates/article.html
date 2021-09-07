@@ -7,6 +7,8 @@
 </head>
 
 <body>
+    <th:block th:include="header :: header"></th:block>
+
     <h1>Create an article</h1>
 
     <div th:if="${errorTitleExist} != null">
@@ -15,7 +17,7 @@
 
     <form action="#" th:action="@{/article}" th:object="${articleForm}" method="post">
         <p>Title: <input type="text" th:field="*{title}" /></p>
-        <p>Content: <textarea th:field="*{content}" ></textarea></p>
+        <p>Content: <textarea th:field="*{content}"></textarea></p>
         <p><input type="submit" value="Submit" /></p>
     </form>
 

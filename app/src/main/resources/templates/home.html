@@ -7,6 +7,8 @@
 </head>
 
 <body>
+    <th:block th:include="header :: header"></th:block>
+
     <h1>Last articles</h1>
 
     <div th:if="${errorArticleNotExist} != null">
@@ -21,6 +23,8 @@
             </a>
         </li>
     </ul>
+
+    <a href="/article">Create an article</a>
 </body>
 
 </html>
