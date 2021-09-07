@@ -15,7 +15,10 @@
 
     <ul>
         <li th:each="article : ${articles}">
-            <span th:text="${article.title}"></span> by <span th:text="${article.user.login}"></span>
+            <a th:href="@{/read/{articleId}(articleId=${article.id})}">
+                <span th:text="${article.title}"></span> by
+                <span th:text="${article.user.login}"></span>
+            </a>
         </li>
     </ul>
 </body>
