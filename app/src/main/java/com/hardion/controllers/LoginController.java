@@ -2,6 +2,9 @@ package com.hardion.controllers;
 
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
+
+import com.hardion.entities.User;
 import com.hardion.forms.LoginForm;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,17 +13,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import com.hardion.services.SessionService;
 import com.hardion.services.UserService;
 
 @Controller
 public class LoginController {
 
+	@Autowired
+	UserService authService;
+
+	@Autowired
+	SessionService sessionService;
+
 	String[] sentences = { "Share your opinion", "Denounce anything here", "See what other people think",
 			"Find other people like you", "Tell anything to the world", "You can have your ideas",
 			"Spread your ideology", "Find your ideology" };
-
-	@Autowired
-	UserService authService;
 
 	String getRandomSentence() {
 		int rnd = new Random().nextInt(sentences.length);
@@ -37,33 +45,42 @@ public class LoginController {
 	}
 
 	@PostMapping("/login")
-	public String loginSubmit(@ModelAttribute LoginForm loginForm, Model model) {
-		boolean isAuthGood = authService.authorizeUser(loginForm.getLogin(), loginForm.getPassword());
+	public String loginSubmit(@ModelAttribute LoginForm loginForm, Model model, HttpServletRequest request) {
+		User userAuth;
+		try {
+			userAuth = authService.authorizeUser(loginForm.getLogin(), loginForm.getPassword());
 
-		if (isAuthGood) {
+			sessionService.addSessionIdUser(request, userAuth);
+
 			return goToHome();
-		} else {
+
+		} catch (Exception e) {
+			System.err.println(e);
+
 			model.addAttribute("errorBadAuth", true);
+
 			return this.loginPage(model);
 		}
-
 	}
 
 	@PostMapping("/create")
-	public String createSubmit(@ModelAttribute LoginForm loginForm, Model model) {
+	public String createSubmit(@ModelAttribute LoginForm loginForm, Model model, HttpServletRequest request) {
 		try {
-			authService.createUser(loginForm.getLogin(), loginForm.getPassword());
+			User newUser = authService.createUser(loginForm.getLogin(), loginForm.getPassword());
+
+			sessionService.addSessionIdUser(request, newUser);
 
 			return goToHome();
 		} catch (Exception e) {
 			System.out.println(e);
+
 			model.addAttribute("errorUserExist", true);
+
 			return this.loginPage(model);
 		}
 	}
 
-	private String goToHome(){
+	private String goToHome() {
 		return "redirect:home";
 	}
-
 }

@@ -10,8 +10,6 @@ import java.util.List;
 import com.hardion.entities.Article;
 import com.hardion.services.ArticleService;
 import com.hardion.services.UserService;
-import com.hardion.entities.User;
-import com.hardion.forms.ArticleForm;
 
 @Controller
 public class HomeController {
@@ -27,21 +25,6 @@ public class HomeController {
 		List<Article> lastArticles = articleService.getLastArticles();
 		model.addAttribute("articles", lastArticles);
 		return "home";
-	}
-
-	// DEV METHOD -> TO KILL
-	@GetMapping("/article")
-	public String createArticle(Model model) {
-		User user;
-		try {
-			user = userService.getUser("e");
-			articleService.createArticle("test", "content test", user);
-		} catch (Exception e) {
-			System.err.println(e);
-		}
-		model.addAttribute("articleForm", new ArticleForm());
-		return "article";
-
 	}
 
 }

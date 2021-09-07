@@ -13,7 +13,7 @@
         <p>Title already exist ! Choose another one.</p>
     </div>
 
-    <form action="#" th:action="@{/login}" th:object="${articleForm}" method="post">
+    <form action="#" th:action="@{/article}" th:object="${articleForm}" method="post">
         <p>Title: <input type="text" th:field="*{title}" /></p>
         <p>Content: <input type="text" th:field="*{content}" /></p>
         <p><input type="submit" value="Submit" /></p>

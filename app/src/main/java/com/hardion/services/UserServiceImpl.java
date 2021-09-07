@@ -14,28 +14,33 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public boolean authorizeUser(String login, String password) {
-        boolean userExist = userRepository.existsByLoginAndPassword(login, password);
-
-        return userExist;
+    public User authorizeUser(String login, String password) throws Exception {
+        Optional<User> user = userRepository.findByLoginAndPassword(login, password);
+        
+        if (user.isPresent()) {
+            return user.get();
+        } else {
+            throw new Exception("User not found");
+        }
     }
 
     @Override
-    public void createUser(String login, String password) throws Exception {
+    public User createUser(String login, String password) throws Exception {
         boolean userExist = userRepository.existsByLogin(login);
         if (!userExist) {
             User newUser = new User();
             newUser.setLogin(login);
             newUser.setPassword(password);
             userRepository.save(newUser);
+            return newUser;
         } else {
             throw new Exception("User exist");
         }
     }
 
     @Override
-    public User getUser(String login) throws Exception {
-        Optional<User> user = userRepository.findByLogin(login);
+    public User getUser(Integer id) throws Exception {
+        Optional<User> user = userRepository.findById(id);
         if (user.isPresent()) {
             return user.get();
         } else {
