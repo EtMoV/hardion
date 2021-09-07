@@ -12,6 +12,7 @@ import com.hardion.entities.Article;
 import com.hardion.services.ArticleService;
 import com.hardion.services.UserService;
 import com.hardion.entities.User;
+import com.hardion.forms.ArticleForm;
 
 @Controller
 public class HomeController {
@@ -25,17 +26,13 @@ public class HomeController {
 	@GetMapping("/home")
 	public String homePage(Model model) {
 		List<Article> lastArticles = articleService.getLastArticles();
-
-		for (int i = 0; i < lastArticles.size(); i++) {
-			Article article = lastArticles.get(i);
-			System.out.println(article.getTitle() + " " + article.getUser().getLogin() + " " + article.getContent());
-		}
+		model.addAttribute("articles", lastArticles);
 		return "home";
 	}
 
 	// DEV METHOD -> TO KILL
-	@PostMapping("/article")
-	public void createArticle() {
+	@GetMapping("/article")
+	public String createArticle(Model model) {
 		User user;
 		try {
 			user = userService.getUser("e");
@@ -43,6 +40,9 @@ public class HomeController {
 		} catch (Exception e) {
 			System.err.println(e);
 		}
+		model.addAttribute("articleForm", new ArticleForm());
+		return "article";
+
 	}
 
 }

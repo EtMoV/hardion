@@ -1,5 +1,6 @@
 package com.hardion.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +41,7 @@ public class ArticleServiceImpl implements ArticleService {
             newArticle.setTitle(title);
             newArticle.setContent(content);
             newArticle.setUser(user);
+            newArticle.setDate(new Date());
             articleRepository.save(newArticle);
         } else {
             throw new Exception("Article exist");

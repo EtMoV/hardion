@@ -41,8 +41,6 @@ public class UserServiceImpl implements UserService {
         } else {
             throw new Exception("User not found");
         }
-
-
     }
 
 }

@@ -1,6 +1,9 @@
 package com.hardion.entities;
 
 import javax.persistence.Entity;
+
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,11 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.data.annotation.CreatedDate;
+
 @Entity
-@Table(uniqueConstraints={@UniqueConstraint(columnNames = {"user_id" , "title"})})
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "user_id", "title" }) })
 public class Article {
 
     @Id
@@ -30,6 +37,9 @@ public class Article {
     @NotNull
     private String content;
 
+    @NotNull
+    private Date date;
+
     // ACCESSORS
     public Integer getId() {
         return id;
@@ -40,7 +50,7 @@ public class Article {
     }
 
     public void setUser(User user) {
-        this.user = user;   
+        this.user = user;
     }
 
     public String getTitle() {
@@ -59,4 +69,11 @@ public class Article {
         this.content = content;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 }
