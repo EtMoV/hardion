@@ -11,10 +11,7 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public void addSessionIdUser(HttpServletRequest request, User user) {
-        System.out.println("idUser : " + user.getId());
-
         request.getSession().setAttribute("idUser", user.getId());
-        System.out.println("Session :" + request.getSession().getAttribute("idUser"));
     }
 
     @Override

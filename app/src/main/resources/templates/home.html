@@ -8,6 +8,11 @@
 
 <body>
     <h1>Last articles</h1>
+
+    <div th:if="${errorArticleNotExist} != null">
+        <p>Article not exist ! Choose another one.</p>
+    </div>
+
     <ul>
         <li th:each="article : ${articles}">
             <span th:text="${article.title}"></span> by <span th:text="${article.user.login}"></span>

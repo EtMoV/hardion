@@ -11,18 +11,18 @@ public class RouterServiceImpl implements RouterService {
 
     @Override
     public String goToHomePage() {
-        return goToRedirect("home");
+        return goToRedirect("/home");
     }
 
     @Override
     public String goToArticlePage() {
-        return goToRedirect("article");
+        return goToRedirect("/article");
 
     }
 
     @Override
     public String goToLoginPage() {
-        return goToRedirect("login");
+        return goToRedirect("/login");
     }
 
 }

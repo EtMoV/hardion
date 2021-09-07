@@ -77,7 +77,7 @@ public class LoginController {
 			return routerService.goToHomePage();
 
 		} catch (Exception e) {
-			System.out.println(e);
+			System.err.println(e);
 
 			model.addAttribute("errorUserExist", true);
 
