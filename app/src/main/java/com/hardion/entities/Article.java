@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,6 +31,7 @@ public class Article {
     @NotNull
     private String title;
 
+    @Column(length = 100000)
     @NotNull
     private String content;
 
