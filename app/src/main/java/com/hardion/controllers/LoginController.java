@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.hardion.services.RouterService;
 import com.hardion.services.SessionService;
 import com.hardion.services.UserService;
 
@@ -25,6 +26,9 @@ public class LoginController {
 
 	@Autowired
 	SessionService sessionService;
+
+	@Autowired
+	RouterService routerService;
 
 	String[] sentences = { "Share your opinion", "Denounce anything here", "See what other people think",
 			"Find other people like you", "Tell anything to the world", "You can have your ideas",
@@ -52,7 +56,7 @@ public class LoginController {
 
 			sessionService.addSessionIdUser(request, userAuth);
 
-			return goToHome();
+			return routerService.goToHomePage();
 
 		} catch (Exception e) {
 			System.err.println(e);
@@ -70,7 +74,8 @@ public class LoginController {
 
 			sessionService.addSessionIdUser(request, newUser);
 
-			return goToHome();
+			return routerService.goToHomePage();
+
 		} catch (Exception e) {
 			System.out.println(e);
 
@@ -78,9 +83,5 @@ public class LoginController {
 
 			return this.loginPage(model);
 		}
-	}
-
-	private String goToHome() {
-		return "redirect:home";
 	}
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpServletRequest;
 
 import com.hardion.services.ArticleService;
+import com.hardion.services.RouterService;
 import com.hardion.services.SessionService;
 import com.hardion.services.UserService;
 import com.hardion.entities.User;
@@ -27,6 +28,9 @@ public class ArticleController {
 	@Autowired
 	SessionService sessionService;
 
+	@Autowired
+	RouterService routerService;
+	
 	@GetMapping("/article")
 	public String articlePage(Model model) {
 		model.addAttribute("articleForm", new ArticleForm());
@@ -44,7 +48,7 @@ public class ArticleController {
 
 			articleService.createArticle(articleForm.getTitle(), articleForm.getContent(), user);
 
-			return goToHome();
+			return routerService.goToHomePage();
 		} catch (Exception e) {
 			System.err.println(e);
 
@@ -53,10 +57,6 @@ public class ArticleController {
 			return this.articlePage(model);
 		}
 
-	}
-
-	private String goToHome() {
-		return "redirect:home";
 	}
 
 }
