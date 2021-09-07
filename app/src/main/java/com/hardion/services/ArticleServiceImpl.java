@@ -19,7 +19,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<Article> getLastArticles() {
-        List<Article> lastArticle = articleRepository.findAll();
+        List<Article> lastArticle = articleRepository.findAllByOrderByDateDesc();
         return lastArticle;
     }
 
